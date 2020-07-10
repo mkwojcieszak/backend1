@@ -93,9 +93,16 @@ class MainController extends AbstractController
      * @Route("/deletegroup/{id}", name="deletegroup")
      */
 
-    public function deleteGroup(Request $request, GroupRepository $repo, $id) {
+    public function deleteGroup(Request $request, GroupRepository $repo, $id, PersonRepository $persRepo) {
         $group = $repo->find($id);
         $em = $this->getDoctrine()->getManager();
+        $persons = $persRepo->findBy(array('group' => $id));
+        foreach($persons as $person) {
+            $person->setGroup(null);
+            $em->persist($person);
+            $em-> flush();
+        }
+
         $em-> remove($group);
         $em-> flush();
         return $this->redirect($this->generateUrl('admin.groups'));
