@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Groups:</h1>
+    <table class='table'>
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Info</td>
+                <td>Creation Time</td>
+                <td>Update Time</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+                <tr>
+                    <td>{{group.name}}</td>
+                    <td>{{group.info}}</td>
+                    <td>{{group.createdAt|date('Y-m-d H:i')}}</td>
+                    <td>{{group.updatedAt|date('Y-m-d H:i')}}</td>
+                    <td>
+                        <a href="{{ path('admin.editgroup', { id: group.id }) }}"><button class='btn btn-success'>Edit</button></a>
+                        <a href="{{ path('admin.deletegroup', { id: group.id }) }}"><button class='btn btn-primary'>Delete</button></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    <table>
+    <a href='{{ path('admin.addgroup') }}'><button class='btn btn-primary'>Add Group</button></a><br>
+    <a href='{{ path('admin.panel') }}'><button class='btn btn-primary'>Panel</button></a><br>
+    <a href='{{ path('app_logout') }}'><button class='btn btn-primary'>Logout</button></a>
+{% endblock %}
