@@ -12,7 +12,7 @@ class AccessDeniedHandler  extends AbstractController implements AccessDeniedHan
 {
     public function handle(Request $request, AccessDeniedException $accessDeniedException)
     {
-
+        $this->addFlash('failure', 'Add admin rights to access admin panel (Add ["ROLE_ADMIN"] to user roles)');
         return $this->redirect($this->generateUrl('app_login'));
     }
 }
